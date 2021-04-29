@@ -1,0 +1,1489 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "This is a REST server to interact with Hyperledger Iroha Blockchain",
+        "version": "1.0.0",
+        "title": "Iroha REST Server",
+        "contact": {
+            "email": "dominic.aidoo@gmail.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        }
+    },
+    "schemes": ["http","https"],
+    "host": "localhost:3000",
+    "basePath": "/api",
+    "paths": {
+        "/v1/asset/createAsset": {
+            "post" : {
+                "summary" : "Create an asset",
+                "description": "Create an asset",
+                "produces": ["application/json"],
+                "consumes": ["application/json"],
+                "tags":["AssetController"],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Create an asset",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/CreateAssetRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Transaction committed",
+                        "schema": {
+                            "$ref": "#/definitions/IrohaSuccessResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Error from iroha",
+                        "schema": {
+                            "$ref": "#/definitions/IrohaErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/asset/addAssetQuantity": {
+            "post" : {
+                "summary" : "Add asset quantity",
+                "description": "Add asset quantity",
+                "produces": ["application/json"],
+                "consumes": ["application/json"],
+                "tags":["AssetController"],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Add asset quantity",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/AdjustAssetQuantityRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                          "$ref": "#/definitions/IrohaSuccessResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Invalid status value",
+                        "schema": {
+                            "$ref": "#/definitions/IrohaErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/asset/subtractAssetQuantity": {
+            "post" : {
+                "summary" : "Subtract asset quantity",
+                "description": "Subtract asset quantity",
+                "produces": ["application/json"],
+                "tags":["AssetController"],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Subtract asset quantity",
+                        "required": true,
+                        "schema": {
+                          "$ref": "#/definitions/AdjustAssetQuantityRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/IrohaSuccessResponse"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Invalid status value",
+                        "schema": {
+                            "$ref": "#/definitions/IrohaErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/asset/transferAsset": {
+            "post" : {
+                "summary" : "Transfer asset",
+                "description": "Transfer asset",
+                "produces": ["application/json"],
+                "tags":["AssetController"],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Transfer asset",
+                        "required": true,
+                        "schema": {
+                          "$ref": "#/definitions/TransferAssetRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/IrohaSuccessResponse"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Invalid status value",
+                        "schema": {
+                            "$ref": "#/definitions/IrohaErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/asset/getAssetInfo/{assetId}": {
+            "get" : {
+                "summary" : "Get asset info",
+                "description": "Get asset info",
+                "produces": ["application/json"],
+                "tags":["AssetController","Queries"],
+                "parameters": [
+                    {
+                        "name": "assetId",
+                        "in": "path",
+                        "type": "string",
+                        "description": "Get asset info",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/getAssetInfoResponse"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Invalid status value",
+                        "schema": {
+                            "$ref": "#/definitions/IrohaErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/account/compareAndSetAccountDetail": {
+            "post" : {
+                "summary" : "Compare and set account detail",
+                "description": "Compare and set account detail",
+                "produces": ["application/json"],
+                "tags":["AccountController","Commands"],
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Compare and set account detail",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/CompareAndSetAccountDetailRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/getAssetInfoResponse"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Invalid status value",
+                        "schema": {
+                            "$ref": "#/definitions/IrohaErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/account/createAccount": {
+            "post" : {
+                "summary" : "Create account",
+                "description": "Create account",
+                "produces": ["application/json"],
+                "tags":["AccountController","Commands"],
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Create account",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/CreateAccountRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/getAssetInfoResponse"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Invalid status value",
+                        "schema": {
+                            "$ref": "#/definitions/IrohaErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/account/setAccountDetail": {
+            "post" : {
+                "summary" : "Set account detail",
+                "description": "Set account detail",
+                "produces": ["application/json"],
+                "tags":["AccountController","Commands"],
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Set account detail",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/SetAccountDetailRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/getAssetInfoResponse"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Invalid status value",
+                        "schema": {
+                            "$ref": "#/definitions/IrohaErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/account/setAccountQuorum": {
+            "post" : {
+                "summary" : "Set account quorum",
+                "description": "Set account quorum",
+                "produces": ["application/json"],
+                "tags":["AccountController","Commands"],
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Set account quorum",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/SetAccountQuorumRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/getAssetInfoResponse"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Invalid status value",
+                        "schema": {
+                            "$ref": "#/definitions/IrohaErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/account/getAccount/{accountId}": {
+            "get" : {
+                "summary" : "Get account",
+                "description": "Get account",
+                "produces": ["application/json"],
+                "tags":["AccountController","Queries"],
+                "parameters": [
+                    {
+                        "name": "accountId",
+                        "in": "path",
+                        "type": "string",
+                        "description": "Get account",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/getAssetInfoResponse"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Invalid status value",
+                        "schema": {
+                            "$ref": "#/definitions/IrohaErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/account/getAccountDetail/{accountId}": {
+            "get" : {
+                "summary" : "Get account detail",
+                "description": "Get account detail",
+                "produces": ["application/json"],
+                "tags":["AccountController","Queries"],
+                "parameters": [
+                    {
+                        "name": "accountId",
+                        "in": "path",
+                        "type": "string",
+                        "description": "Get account detail",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/getAssetInfoResponse"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Invalid status value",
+                        "schema": {
+                            "$ref": "#/definitions/IrohaErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/account/getAccountAssets": {
+            "post" : {
+                "summary" : "Get account assets",
+                "description": "Get account assets",
+                "produces": ["application/json"],
+                "tags":["AccountController","Commands"],
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Get account assets",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/GetAccountAssetsRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/getAssetInfoResponse"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Invalid status value",
+                        "schema": {
+                            "$ref": "#/definitions/IrohaErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/account/getRawAccount/{accountId}": {
+            "get" : {
+                "summary" : "Get raw account",
+                "description": "Get raw account",
+                "produces": ["application/json"],
+                "tags":["AccountController","Queries"],
+                "parameters": [
+                    {
+                        "name": "accountId",
+                        "in": "path",
+                        "type": "string",
+                        "description": "Get raw account",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/getAssetInfoResponse"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Invalid status value",
+                        "schema": {
+                            "$ref": "#/definitions/IrohaErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/account/getAccountTransactions": {
+            "post" : {
+                "summary" : "Get account transactions",
+                "description": "Get account transactions",
+                "produces": ["application/json"],
+                "tags":["AccountController","Queries"],
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Get account transactions",
+                        "required": true,
+                        "schema":{
+                            "$ref": "#/definitions/GetAccountTransactionsRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/getAssetInfoResponse"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Invalid status value",
+                        "schema": {
+                            "$ref": "#/definitions/IrohaErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/account/getAccountAssetTransactions": {
+            "post" : {
+                "summary" : "Get account asset transactions",
+                "description": "Get account asset transactions",
+                "produces": ["application/json"],
+                "tags":["AccountController","Queries"],
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Get account asset transactions",
+                        "required": true,
+                        "schema":{
+                            "$ref": "#/definitions/GetAccountAssetTransactionsRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/getAssetInfoResponse"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Invalid status value",
+                        "schema": {
+                            "$ref": "#/definitions/IrohaErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/domain/createDomain": {
+            "post" : {
+                "summary" : "Create domain",
+                "description": "Create domain",
+                "produces": ["application/json"],
+                "tags":["DomainController","Queries"],
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Create domain",
+                        "required": true,
+                        "schema":{
+                            "$ref": "#/definitions/CreateDomainRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/getAssetInfoResponse"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Invalid status value",
+                        "schema": {
+                            "$ref": "#/definitions/IrohaErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/grantableperm/grantPermission": {
+            "post" : {
+                "summary" : "Grant a grantable permission",
+                "description": "Grant a grantable permission",
+                "produces": ["application/json"],
+                "tags":["GrantablePermissionController","Commands"],
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Grant a grantable permission",
+                        "required": true,
+                        "schema":{
+                            "$ref": "#/definitions/GrantablePermissionRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/getAssetInfoResponse"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Invalid status value",
+                        "schema": {
+                            "$ref": "#/definitions/IrohaErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/grantableperm/revokePermission": {
+            "post" : {
+                "summary" : "Revoke a grantable permission",
+                "description": "Revoke a grantable permission",
+                "produces": ["application/json"],
+                "tags":["GrantablePermissionController","Commands"],
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Revoke a grantable permission",
+                        "required": true,
+                        "schema":{
+                            "$ref": "#/definitions/GrantablePermissionRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/getAssetInfoResponse"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Invalid status value",
+                        "schema": {
+                            "$ref": "#/definitions/IrohaErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/misc/getBlock/{blockId}": {
+            "get" : {
+                "summary" : "Retrieve block info",
+                "description": "Retrieve block info",
+                "produces": ["application/json"],
+                "tags":["MiscQueriesController","Queries"],
+                "parameters": [
+                    {
+                        "name": "blockId",
+                        "in": "path",
+                        "type": "number",
+                        "description": "Retrieve block info",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/getAssetInfoResponse"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Invalid status value",
+                        "schema": {
+                            "$ref": "#/definitions/IrohaErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/misc/getEngineReceipts/{txHash}": {
+            "get" : {
+                "summary" : "Get engine receipts",
+                "description": "Get engine receipts",
+                "produces": ["application/json"],
+                "tags":["MiscQueriesController","Queries"],
+                "parameters": [
+                    {
+                        "name": "txHash",
+                        "in": "path",
+                        "type": "string",
+                        "description": "Get engine receipts",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/getAssetInfoResponse"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Invalid status value",
+                        "schema": {
+                            "$ref": "#/definitions/IrohaErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/peer/addPeer": {
+            "post" : {
+                "summary" : "Add a peer to the network",
+                "description": "Add a peer to the network",
+                "produces": ["application/json"],
+                "tags":["PeerController","Commands"],
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Add a peer to the network",
+                        "required": true,
+                        "schema":{
+                            "$ref": "#/definitions/AddPeerRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/getAssetInfoResponse"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Invalid status value",
+                        "schema": {
+                            "$ref": "#/definitions/IrohaErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/peer/removePeer": {
+            "post" : {
+                "summary" : "Remove a peer from the network",
+                "description": "Remove a peer from the network",
+                "produces": ["application/json"],
+                "tags":["PeerController","Commands"],
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Remove a peer from the network",
+                        "required": true,
+                        "schema":{
+                            "$ref": "#/definitions/RemovePeerRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/getAssetInfoResponse"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Invalid status value",
+                        "schema": {
+                            "$ref": "#/definitions/IrohaErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/peer/getPeers": {
+            "get" : {
+                "summary" : "Get peers from the network",
+                "description": "Get peers from the network",
+                "produces": ["application/json"],
+                "tags":["PeerController","Queries"],
+
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/getAssetInfoResponse"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Invalid status value",
+                        "schema": {
+                            "$ref": "#/definitions/IrohaErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/role/appendRole": {
+            "post" : {
+                "summary" : "Append a role",
+                "description": "Append a role to an account",
+                "produces": ["application/json"],
+                "tags":["RoleController","Commands"],
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Append a role to an account",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/AdjustRoleRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/getAssetInfoResponse"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Invalid status value",
+                        "schema": {
+                            "$ref": "#/definitions/IrohaErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/role/createRole": {
+            "post" : {
+                "summary" : "Create a role",
+                "description": "Create a role",
+                "produces": ["application/json"],
+                "tags":["RoleController","Commands"],
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Create a role",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/CreateRoleRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/getAssetInfoResponse"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Invalid status value",
+                        "schema": {
+                            "$ref": "#/definitions/IrohaErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/role/detachRole": {
+            "post" : {
+                "summary" : "Detach a role",
+                "description": "Detach a role",
+                "produces": ["application/json"],
+                "tags":["RoleController","Commands"],
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Detach a role",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/AdjustRoleRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/getAssetInfoResponse"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Invalid status value",
+                        "schema": {
+                            "$ref": "#/definitions/IrohaErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/role/getRolePermissions/{roleId}": {
+            "get" : {
+                "summary" : "Get the permissions of a role",
+                "description": "Get the permissions of a role",
+                "produces": ["application/json"],
+                "tags":["RoleController","Queries"],
+                "parameters": [
+                    {
+                        "name": "roleId",
+                        "in": "path",
+                        "type": "string",
+                        "description": "Get the permissions of a role",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/getAssetInfoResponse"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Invalid status value",
+                        "schema": {
+                            "$ref": "#/definitions/IrohaErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/role/getRoles": {
+            "get" : {
+                "summary" : "Get available roles",
+                "description": "Get available roles",
+                "produces": ["application/json"],
+                "tags":["RoleController","Queries"],
+
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/getAssetInfoResponse"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Invalid status value",
+                        "schema": {
+                            "$ref": "#/definitions/IrohaErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/signatory/addSignatory": {
+            "post" : {
+                "summary" : "Add signing key to account",
+                "description": "Add signing key to account",
+                "produces": ["application/json"],
+                "tags":["SignatoryController","Commands"],
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Add signing key to account",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/SignatoryRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/getAssetInfoResponse"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Invalid status value",
+                        "schema": {
+                            "$ref": "#/definitions/IrohaErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/signatory/removeSignatory": {
+            "post" : {
+                "summary" : "Remove signing key to account",
+                "description": "Remove signing key to account",
+                "produces": ["application/json"],
+                "tags":["SignatoryController","Commands"],
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Remove signing key to account",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/SignatoryRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/getAssetInfoResponse"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Invalid status value",
+                        "schema": {
+                            "$ref": "#/definitions/IrohaErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/signatory/getSignatories/{accountId}": {
+            "get" : {
+                "summary" : "Get signing key(s) for account",
+                "description": "Get signing key(s) for account",
+                "produces": ["application/json"],
+                "tags":["SignatoryController","Queries"],
+                "parameters": [
+                    {
+                        "name": "accountId",
+                        "in": "path",
+                        "type": "string",
+                        "description": "Get signing key(s) for account",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/getAssetInfoResponse"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Invalid status value",
+                        "schema": {
+                            "$ref": "#/definitions/IrohaErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/transactions/getTransx/{accountId}": {
+            "get" : {
+                "summary" : "Get transactions for account",
+                "description": "Get transactions for account",
+                "produces": ["application/json"],
+                "tags":["TransactionController","Queries"],
+                "parameters": [
+                    {
+                        "name": "accountId",
+                        "in": "path",
+                        "type": "string",
+                        "description": "Get transactions for account",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/getAssetInfoResponse"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Invalid status value",
+                        "schema": {
+                            "$ref": "#/definitions/IrohaErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/transactions/getPendingTransx": {
+            "post" : {
+                "summary" : "Get pending transactions",
+                "description": "Get pending transactions",
+                "produces": ["application/json"],
+                "tags":["TransactionController","Queries"],
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Get pending transactions",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/GetPendingTransactionsRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/getAssetInfoResponse"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Invalid status value",
+                        "schema": {
+                            "$ref": "#/definitions/IrohaErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/transactions/getRawPendingTransx": {
+            "get" : {
+                "summary" : "Get raw pending transactions",
+                "description": "Get raw pending transactions",
+                "produces": ["application/json"],
+                "tags":["TransactionController","Queries"],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/getAssetInfoResponse"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Invalid status value",
+                        "schema": {
+                            "$ref": "#/definitions/IrohaErrorResponse"
+                        }
+                    }
+                }
+            }
+        }
+    }, 
+    "definitions": {
+        "CreateAssetRequest": {
+            "type": "object",
+            "properties": {
+                "assetName": {
+                     "type": "string"
+                },
+                "domainId": {
+                    "type": "string"
+                },
+                "precision": {
+                    "type": "integer"
+                }
+            }
+        },
+        "AdjustAssetQuantityRequest": {
+            "type": "object",
+            "properties": {
+                "assetId": {
+                     "type": "string"
+                },
+                "amount": {
+                    "type": "string"
+                }
+            }
+        },
+        "TransferAssetRequest": {
+            "type": "object",
+            "properties": {
+                "srcAccountId": {
+                     "type": "string"
+                },
+                "destAccountId": {
+                     "type": "string"
+                },
+                "assetId": {
+                     "type": "string"
+                },
+                "description": {
+                     "type": "string"
+                },
+                "amount": {
+                    "type": "string"
+                }
+            }
+        },
+        "CompareAndSetAccountDetailRequest": {
+            "type": "object",
+            "properties": {
+                "accountId": {
+                     "type": "string"
+                },
+                "key": {
+                     "type": "string"
+                },
+                "value": {
+                     "type": "string"
+                },
+                "oldValue": {
+                     "type": "string"
+                },
+                "checkEmpty": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "CreateAccountRequest": {
+            "type": "object",
+            "properties": {
+                "accountName": {
+                     "type": "string"
+                },
+                "domainId": {
+                     "type": "string"
+                },
+                "publicKey": {
+                     "type": "string"
+                }
+            }
+        },
+        "SetAccountDetailRequest": {
+            "type": "object",
+            "properties": {
+                "accountId": {
+                     "type": "string"
+                },
+                "key": {
+                     "type": "string"
+                },
+                "value": {
+                     "type": "string"
+                }
+            }
+        },
+        "SetAccountQuorumRequest": {
+            "type": "object",
+            "properties": {
+                "accountId": {
+                     "type": "string"
+                },
+                "quorum": {
+                     "type": "number"
+                }
+            }
+        },
+        "GetAccountAssetsRequest": {
+            "type": "object",
+            "properties": {
+                "accountId": {
+                     "type": "string"
+                },
+                "pageSize": {
+                     "type": "number"
+                },
+                "firstAssetId": {
+                    "type": "string"
+               }
+            }
+        },
+        "GetAccountTransactionsRequest": {
+            "type": "object",
+            "properties": {
+                "accountId": {
+                     "type": "string"
+                },
+                "pageSize": {
+                     "type": "number"
+                }
+            }
+        },
+        "GetAccountAssetTransactionsRequest": {
+            "type": "object",
+            "properties": {
+                "accountId": {
+                     "type": "string"
+                },
+                "assetId": {
+                     "type": "string"
+                },
+                "pageSize": {
+                    "type": "number"
+               }
+            }
+        },
+        "CreateDomainRequest": {
+            "type": "object",
+            "properties": {
+                "domainId": {
+                     "type": "string"
+                },
+                "defaultRole": {
+                     "type": "string"
+                }
+            }
+        },
+        "GrantablePermissionRequest": {
+            "type": "object",
+            "properties": {
+                "accountId": {
+                     "type": "string"
+                },
+                "permission": {
+                     "type": "string"
+                }
+            }
+        },
+        "AddPeerRequest": {
+            "type": "object",
+            "properties": {
+                "accountId": {
+                     "type": "string"
+                },
+                "permission": {
+                     "type": "string"
+                }
+            }
+        },
+        "RemovePeerRequest": {
+            "type": "object",
+            "properties": {
+                "publicKey": {
+                     "type": "string"
+                }
+            }
+        },
+        "AdjustRoleRequest": {
+            "type": "object",
+            "properties": {
+                "accountId": {
+                     "type": "string"
+                },
+                "roleName": {
+                    "type": "string"
+               }
+            }
+        },
+        "CreateRoleRequest": {
+            "type": "object",
+            "properties": {
+                "roleName": {
+                     "type": "string"
+                },
+                "permissionsList": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+               }
+            }
+        },
+        "SignatoryRequest": {
+            "type": "object",
+            "properties": {
+                "accountId": {
+                     "type": "string"
+                },
+                "publicKey": {
+                    "type": "string"
+               }
+            }
+        },
+        "GetPendingTransactionsRequest": {
+            "type": "object",
+            "properties": {
+                "firstTxHash": {
+                     "type": "string"
+                },
+                "pageSize": {
+                    "type": "number"
+               }
+            }
+        },
+        "getAssetInfoResponse": {
+            "type": "object",
+            "properties": {
+                "assetId": {
+                     "type": "string"
+                },
+                "domainId": {
+                     "type": "string"
+                },
+                "precision": {
+                    "type": "number"
+                }
+            }
+        },
+        "IrohaSuccessResponse": {
+            "type": "object",
+            "properties": {
+                "txHash": {
+                     "type": "string",
+                     "example": "5a33387b7e0cfe4b2d79fdc9bbba61a235a268eef211a73a282b9ce30ac06e28"
+                },
+                "status": {
+                    "type": "string",
+                    "example": "COMMITTED"
+                }
+            }
+        },
+        "IrohaErrorResponse": {
+            "type": "object",
+            "properties": {
+                "error": {
+                     "type": "string",
+                     "example": "Command response error: expected=COMMITTED, actual=REJECTED"
+                },
+                "status": {
+                    "type": "string",
+                    "example": "REJECTED"
+                }
+            }
+        },
+        "IrohaAuthErrorResponse": {
+            "type": "object",
+            "properties": {
+                "error": {
+                     "type": "string",
+                     "example": "Invalid. Iroha key and/or account id is missing."
+                },
+                "status": {
+                    "type": "string",
+                    "example": "REJECTED"
+                }
+            }
+        },
+        "InvalidResponse": {
+            "type": "object",
+            "properties": {
+                "statusCode": {
+                    "type": "string"
+                },
+                "message": {
+                    "type": "string"
+                }
+            }
+
+        }
+    }
+}
