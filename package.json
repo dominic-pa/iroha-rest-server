@@ -4,7 +4,8 @@
   "description": "A REST server to interact with Hyperledger Iroha blockchain platform",
   "main": "src/app.ts",
   "scripts": {
-    "dev": "LOG_LEVEL=debug nodemon src/app.ts | ./node_modules/.bin/pino-pretty"
+    "dev": "LOG_LEVEL=debug nodemon src/app.ts | ./node_modules/.bin/pino-pretty",
+    "build": "tsc"
   },
   "keywords": [],
   "author": "Dominic Poku-Aidoo",

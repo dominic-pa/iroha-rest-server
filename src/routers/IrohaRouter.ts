@@ -8,6 +8,7 @@ import PeerController from '../controllers/PeerController';
 import RoleController from '../controllers/RoleController';
 import SignatoryController from '../controllers/SignatoryController';
 import TransactionsController from '../controllers/TransactionsController';
+import BatchTransactionController from '../controllers/BatchTransactionController';
 
 class IrohaRouter {
   private _IrohaRouter = Router();
@@ -21,6 +22,7 @@ class IrohaRouter {
   private _RoleController = RoleController;
   private _SignatoryController = SignatoryController;
   private _TransactionsController = TransactionsController;
+  private _BatchTransactionController = BatchTransactionController;
 
   get router() {
     return this._IrohaRouter;
@@ -43,6 +45,7 @@ class IrohaRouter {
     this._IrohaRouter.use('/role',this._RoleController);
     this._IrohaRouter.use('/signatory',this._SignatoryController);
     this._IrohaRouter.use('/transactions',this._TransactionsController);
+    this._IrohaRouter.use('/batch',this._BatchTransactionController);
   }
 }
 

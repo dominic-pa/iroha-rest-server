@@ -8,7 +8,7 @@ import { IROHA_PEER_ADDR } from '../configs/IrohaConfig';
 import { setIrohaErrorResp, setIrohaSuccessResp } from '../utils/Utils'
 import { GetAccountAssetsRequest, GetAccountAssetTransactionsRequest, GetAccountDetailRequest, GetAccountRequest, GetAccountTransactionsRequest, GetAssetInfoRequest, GetBlockRequest, GetEngineReceiptsRequest, GetPendingTxsRequest, GetRawAccountRequest, GetRolePermissionsRequest, GetSignatoriesRequest, GetTransactionsRequest } from '../interfaces/requests/QueryRequests';
 
-class QueriesController {
+class IrohaQueryService {
 
   // QUERIES
     private queryService = new QueryService(IROHA_PEER_ADDR, grpc.credentials.createInsecure());
@@ -220,4 +220,4 @@ class QueriesController {
 
   }
   
-  export = new QueriesController();
+  export = new IrohaQueryService();

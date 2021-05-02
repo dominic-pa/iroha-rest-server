@@ -1,9 +1,11 @@
-import { NextFunction, Request, Response, Router } from 'express';
+import { NextFunction, query, Request, Response, Router } from 'express';
 
 import { GetAccountRequest, GetAccountDetailRequest, GetAccountAssetsRequest, GetRawAccountRequest, GetAccountTransactionsRequest, GetAccountAssetTransactionsRequest} from '../interfaces/requests/QueryRequests';
 import { CompareAndSetAccountDetailRequest, CreateAccountRequest, SetAccountDetailRequest, SetAccountQuorumRequest } from '../interfaces/requests/CommandRequests';
 import IrohaCommandService = require('../services/IrohaCommandService');
 import IrohaQueryService from '../services/IrohaQueryService';
+import url from 'url';
+import queryString from 'querystring';
 
 
 class AccountController {
@@ -102,9 +104,8 @@ class AccountController {
 
   //QUERIES
   private async _getAccount() { 
-    await this._router.post('/getAccount', (req: Request, res: Response, next: NextFunction) => {
-      let getAccountRequest = new GetAccountRequest(req.body.accountId,req.body.accountId);
-      getAccountRequest = req.body;
+    await this._router.get('/getAccount/:accountId', (req: Request, res: Response, next: NextFunction) => {
+      let getAccountRequest = new GetAccountRequest(req.params.accountId,req.body.accountId);
       console.log("Incoming request for query *getAccount* ::: %s",getAccountRequest);
 
       this._irohaQueryService.getAccount(getAccountRequest,req.headers)
@@ -157,9 +158,9 @@ class AccountController {
   }
 
   private async _getRawAccount() {
-    await this._router.post('/getRawAccount', (req: Request, res: Response, next: NextFunction) => {
+    await this._router.get('/getRawAccount/:accountId', (req: Request, res: Response, next: NextFunction) => {
       let getRawAccountRequest = new GetRawAccountRequest;
-      getRawAccountRequest = req.body;
+      getRawAccountRequest = {"accountId": req.params.accountId};
       console.log("Incoming request for query *getRawAccount* ::: %s",getRawAccountRequest);
 
       this._irohaQueryService.getRawAccount(getRawAccountRequest,req.headers)

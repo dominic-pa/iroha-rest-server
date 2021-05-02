@@ -161,7 +161,7 @@
                 "summary" : "Get asset info",
                 "description": "Get asset info",
                 "produces": ["application/json"],
-                "tags":["AssetController","Queries"],
+                "tags":["AssetController"],
                 "parameters": [
                     {
                         "name": "assetId",
@@ -195,7 +195,7 @@
                 "summary" : "Compare and set account detail",
                 "description": "Compare and set account detail",
                 "produces": ["application/json"],
-                "tags":["AccountController","Commands"],
+                "tags":["AccountController"],
                 "parameters": [
                     {
                         "name": "body",
@@ -231,7 +231,7 @@
                 "summary" : "Create account",
                 "description": "Create account",
                 "produces": ["application/json"],
-                "tags":["AccountController","Commands"],
+                "tags":["AccountController"],
                 "parameters": [
                     {
                         "name": "body",
@@ -267,7 +267,7 @@
                 "summary" : "Set account detail",
                 "description": "Set account detail",
                 "produces": ["application/json"],
-                "tags":["AccountController","Commands"],
+                "tags":["AccountController"],
                 "parameters": [
                     {
                         "name": "body",
@@ -303,7 +303,7 @@
                 "summary" : "Set account quorum",
                 "description": "Set account quorum",
                 "produces": ["application/json"],
-                "tags":["AccountController","Commands"],
+                "tags":["AccountController"],
                 "parameters": [
                     {
                         "name": "body",
@@ -339,7 +339,7 @@
                 "summary" : "Get account",
                 "description": "Get account",
                 "produces": ["application/json"],
-                "tags":["AccountController","Queries"],
+                "tags":["AccountController"],
                 "parameters": [
                     {
                         "name": "accountId",
@@ -373,7 +373,7 @@
                 "summary" : "Get account detail",
                 "description": "Get account detail",
                 "produces": ["application/json"],
-                "tags":["AccountController","Queries"],
+                "tags":["AccountController"],
                 "parameters": [
                     {
                         "name": "accountId",
@@ -407,7 +407,7 @@
                 "summary" : "Get account assets",
                 "description": "Get account assets",
                 "produces": ["application/json"],
-                "tags":["AccountController","Commands"],
+                "tags":["AccountController"],
                 "parameters": [
                     {
                         "name": "body",
@@ -443,7 +443,7 @@
                 "summary" : "Get raw account",
                 "description": "Get raw account",
                 "produces": ["application/json"],
-                "tags":["AccountController","Queries"],
+                "tags":["AccountController"],
                 "parameters": [
                     {
                         "name": "accountId",
@@ -477,7 +477,7 @@
                 "summary" : "Get account transactions",
                 "description": "Get account transactions",
                 "produces": ["application/json"],
-                "tags":["AccountController","Queries"],
+                "tags":["AccountController"],
                 "parameters": [
                     {
                         "name": "body",
@@ -513,7 +513,7 @@
                 "summary" : "Get account asset transactions",
                 "description": "Get account asset transactions",
                 "produces": ["application/json"],
-                "tags":["AccountController","Queries"],
+                "tags":["AccountController"],
                 "parameters": [
                     {
                         "name": "body",
@@ -549,7 +549,7 @@
                 "summary" : "Create domain",
                 "description": "Create domain",
                 "produces": ["application/json"],
-                "tags":["DomainController","Queries"],
+                "tags":["DomainController"],
                 "parameters": [
                     {
                         "name": "body",
@@ -585,7 +585,7 @@
                 "summary" : "Grant a grantable permission",
                 "description": "Grant a grantable permission",
                 "produces": ["application/json"],
-                "tags":["GrantablePermissionController","Commands"],
+                "tags":["GrantablePermissionController"],
                 "parameters": [
                     {
                         "name": "body",
@@ -621,7 +621,7 @@
                 "summary" : "Revoke a grantable permission",
                 "description": "Revoke a grantable permission",
                 "produces": ["application/json"],
-                "tags":["GrantablePermissionController","Commands"],
+                "tags":["GrantablePermissionController"],
                 "parameters": [
                     {
                         "name": "body",
@@ -657,7 +657,7 @@
                 "summary" : "Retrieve block info",
                 "description": "Retrieve block info",
                 "produces": ["application/json"],
-                "tags":["MiscQueriesController","Queries"],
+                "tags":["MiscQueriesController"],
                 "parameters": [
                     {
                         "name": "blockId",
@@ -691,7 +691,7 @@
                 "summary" : "Get engine receipts",
                 "description": "Get engine receipts",
                 "produces": ["application/json"],
-                "tags":["MiscQueriesController","Queries"],
+                "tags":["MiscQueriesController"],
                 "parameters": [
                     {
                         "name": "txHash",
@@ -725,7 +725,7 @@
                 "summary" : "Add a peer to the network",
                 "description": "Add a peer to the network",
                 "produces": ["application/json"],
-                "tags":["PeerController","Commands"],
+                "tags":["PeerController"],
                 "parameters": [
                     {
                         "name": "body",
@@ -761,7 +761,7 @@
                 "summary" : "Remove a peer from the network",
                 "description": "Remove a peer from the network",
                 "produces": ["application/json"],
-                "tags":["PeerController","Commands"],
+                "tags":["PeerController"],
                 "parameters": [
                     {
                         "name": "body",
@@ -797,7 +797,7 @@
                 "summary" : "Get peers from the network",
                 "description": "Get peers from the network",
                 "produces": ["application/json"],
-                "tags":["PeerController","Queries"],
+                "tags":["PeerController"],
 
                 "responses": {
                     "200": {
@@ -823,7 +823,7 @@
                 "summary" : "Append a role",
                 "description": "Append a role to an account",
                 "produces": ["application/json"],
-                "tags":["RoleController","Commands"],
+                "tags":["RoleController"],
                 "parameters": [
                     {
                         "name": "body",
@@ -859,7 +859,7 @@
                 "summary" : "Create a role",
                 "description": "Create a role",
                 "produces": ["application/json"],
-                "tags":["RoleController","Commands"],
+                "tags":["RoleController"],
                 "parameters": [
                     {
                         "name": "body",
@@ -895,7 +895,7 @@
                 "summary" : "Detach a role",
                 "description": "Detach a role",
                 "produces": ["application/json"],
-                "tags":["RoleController","Commands"],
+                "tags":["RoleController"],
                 "parameters": [
                     {
                         "name": "body",
@@ -931,7 +931,7 @@
                 "summary" : "Get the permissions of a role",
                 "description": "Get the permissions of a role",
                 "produces": ["application/json"],
-                "tags":["RoleController","Queries"],
+                "tags":["RoleController"],
                 "parameters": [
                     {
                         "name": "roleId",
@@ -965,7 +965,7 @@
                 "summary" : "Get available roles",
                 "description": "Get available roles",
                 "produces": ["application/json"],
-                "tags":["RoleController","Queries"],
+                "tags":["RoleController"],
 
                 "responses": {
                     "200": {
@@ -991,7 +991,7 @@
                 "summary" : "Add signing key to account",
                 "description": "Add signing key to account",
                 "produces": ["application/json"],
-                "tags":["SignatoryController","Commands"],
+                "tags":["SignatoryController"],
                 "parameters": [
                     {
                         "name": "body",
@@ -1027,7 +1027,7 @@
                 "summary" : "Remove signing key to account",
                 "description": "Remove signing key to account",
                 "produces": ["application/json"],
-                "tags":["SignatoryController","Commands"],
+                "tags":["SignatoryController"],
                 "parameters": [
                     {
                         "name": "body",
@@ -1063,7 +1063,7 @@
                 "summary" : "Get signing key(s) for account",
                 "description": "Get signing key(s) for account",
                 "produces": ["application/json"],
-                "tags":["SignatoryController","Queries"],
+                "tags":["SignatoryController"],
                 "parameters": [
                     {
                         "name": "accountId",
@@ -1097,7 +1097,7 @@
                 "summary" : "Get transactions for account",
                 "description": "Get transactions for account",
                 "produces": ["application/json"],
-                "tags":["TransactionController","Queries"],
+                "tags":["TransactionController"],
                 "parameters": [
                     {
                         "name": "accountId",
@@ -1131,7 +1131,7 @@
                 "summary" : "Get pending transactions",
                 "description": "Get pending transactions",
                 "produces": ["application/json"],
-                "tags":["TransactionController","Queries"],
+                "tags":["TransactionController"],
                 "parameters": [
                     {
                         "name": "body",
@@ -1167,7 +1167,7 @@
                 "summary" : "Get raw pending transactions",
                 "description": "Get raw pending transactions",
                 "produces": ["application/json"],
-                "tags":["TransactionController","Queries"],
+                "tags":["TransactionController"],
                 "responses": {
                     "200": {
                         "description": "successful operation",

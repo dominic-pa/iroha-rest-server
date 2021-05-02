@@ -8,7 +8,7 @@ import { AdjustAssetQuantityRequest, AddPeerRequest, AddSignatoryRequest, Append
 import { IROHA_ACCOUNT_ID_HEADER, IROHA_ACCOUNT_KEY_HEADER, IROHA_DEFAULT_PRIM_KEY, IROHA_COMMAND_SERVICE_TIMEOUT, IROHA_COMMAND_DEFAULT_QUORUM } from '../configs/IrohaConfig';
 import { IROHA_PEER_ADDR } from '../configs/IrohaConfig';
 
-class CommandsController {
+class IrohaCommandService {
 
     // COMMANDS    
     private adminAccount = IROHA_DEFAULT_PRIM_KEY;
@@ -24,7 +24,7 @@ class CommandsController {
         timeoutLimit: IROHA_COMMAND_SERVICE_TIMEOUT,
     };
 
-      // COMMANDS
+    // COMMANDS
     addAssetQuantity(addAssetQuantityRequest: AdjustAssetQuantityRequest,commandOptions: any): Promise<any> {
       this.COMMAND_OPTIONS.creatorAccountId = commandOptions[IROHA_ACCOUNT_ID_HEADER];
       this.COMMAND_OPTIONS.privateKeys[0] = commandOptions[IROHA_ACCOUNT_KEY_HEADER];
@@ -307,4 +307,4 @@ class CommandsController {
 
   }
   
-  export = new CommandsController();
+  export = new IrohaCommandService();

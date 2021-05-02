@@ -4,7 +4,8 @@ export class GetAccountRequest {
     domainId!: string;
    
     constructor(accountId: string, domainId: string){
-        this.accountId = `${accountId}@${domainId}`;
+        this.accountId = accountId;
+        this.domainId = domainId;
     }
 }
 

@@ -1,6 +1,8 @@
-import { IROHA_ACCOUNT_SUFFIX } from "../../utils/Constants";
+// REQUEST INTERFACES
+export class IrohaTxRequest {
 
-// REQUEST INTERFACE
+}
+
 export class AdjustAssetQuantityRequest {
     assetId!: string;
     amount!: string;
@@ -36,6 +38,30 @@ export class AddPeerRequest {
     }
 }
 
+export class BatchAddPeerRequest {
+    peer!: Peer;
+
+    //constructor(){}
+
+    constructor(peer: Peer) {
+        this.peer = peer;
+    }
+}
+
+export class Peer {
+    address!: string;
+    peerKey!: string;
+    tlsCertificate!: string;
+
+    //constructor(){}
+
+    constructor(address: string, peerKey: string, tlsCertificate: string) {
+        this.address = address;
+        this.peerKey = peerKey;
+        this.tlsCertificate = tlsCertificate;
+    }
+}
+
 export class AddSignatoryRequest {
     accountId!: string;
     publicKey!: string;
@@ -53,7 +79,7 @@ export class AppendRoleRequest {
     roleName!: string;
 
     constructor(accountId: string, roleName: string) {
-        this.accountId = `${accountId}@${accountId}`;
+        this.accountId = accountId;
         this.roleName = roleName;
     }
 }
@@ -127,15 +153,82 @@ export class CreateDomainRequest {
 
 export class CreateRoleRequest {
     roleName!: string;
-    permissionsList!: Array<string>;
+    permissionsList: Array<RolePermissionMap[keyof RolePermissionMap]>;
    
     //constructor(){}
 
-    constructor(roleName: string, permissionsList: Array<string>) {
+    constructor(roleName: string, permissionsList: Array<RolePermissionMap[keyof RolePermissionMap]>) {
         this.roleName = roleName;
         this.permissionsList = permissionsList;
     }
 }
+
+export interface RolePermissionMap {
+    CAN_APPEND_ROLE: 0;
+    CAN_CREATE_ROLE: 1;
+    CAN_DETACH_ROLE: 2;
+    CAN_ADD_ASSET_QTY: 3;
+    CAN_SUBTRACT_ASSET_QTY: 4;
+    CAN_ADD_PEER: 5;
+    CAN_REMOVE_PEER: 46;
+    CAN_ADD_SIGNATORY: 6;
+    CAN_REMOVE_SIGNATORY: 7;
+    CAN_SET_QUORUM: 8;
+    CAN_CREATE_ACCOUNT: 9;
+    CAN_SET_DETAIL: 10;
+    CAN_CREATE_ASSET: 11;
+    CAN_TRANSFER: 12;
+    CAN_RECEIVE: 13;
+    CAN_CREATE_DOMAIN: 14;
+    CAN_ADD_DOMAIN_ASSET_QTY: 43;
+    CAN_SUBTRACT_DOMAIN_ASSET_QTY: 44;
+    CAN_CALL_ENGINE: 48;
+    CAN_CALL_MODEL: 53;
+    CAN_READ_ASSETS: 15;
+    CAN_GET_ROLES: 16;
+    CAN_GET_MY_ACCOUNT: 17;
+    CAN_GET_ALL_ACCOUNTS: 18;
+    CAN_GET_DOMAIN_ACCOUNTS: 19;
+    CAN_GET_MY_SIGNATORIES: 20;
+    CAN_GET_ALL_SIGNATORIES: 21;
+    CAN_GET_DOMAIN_SIGNATORIES: 22;
+    CAN_GET_MY_ACC_AST: 23;
+    CAN_GET_ALL_ACC_AST: 24;
+    CAN_GET_DOMAIN_ACC_AST: 25;
+    CAN_GET_MY_ACC_DETAIL: 26;
+    CAN_GET_ALL_ACC_DETAIL: 27;
+    CAN_GET_DOMAIN_ACC_DETAIL: 28;
+    CAN_GET_MY_ACC_TXS: 29;
+    CAN_GET_ALL_ACC_TXS: 30;
+    CAN_GET_DOMAIN_ACC_TXS: 31;
+    CAN_GET_MY_ACC_AST_TXS: 32;
+    CAN_GET_ALL_ACC_AST_TXS: 33;
+    CAN_GET_DOMAIN_ACC_AST_TXS: 34;
+    CAN_GET_MY_TXS: 35;
+    CAN_GET_ALL_TXS: 36;
+    CAN_GET_BLOCKS: 42;
+    CAN_GET_PEERS: 45;
+    CAN_GET_MY_ENGINE_RECEIPTS: 50;
+    CAN_GET_DOMAIN_ENGINE_RECEIPTS: 51;
+    CAN_GET_ALL_ENGINE_RECEIPTS: 52;
+    CAN_GRANT_CAN_SET_MY_QUORUM: 37;
+    CAN_GRANT_CAN_ADD_MY_SIGNATORY: 38;
+    CAN_GRANT_CAN_REMOVE_MY_SIGNATORY: 39;
+    CAN_GRANT_CAN_TRANSFER_MY_ASSETS: 40;
+    CAN_GRANT_CAN_SET_MY_ACCOUNT_DETAIL: 41;
+    CAN_GRANT_CAN_CALL_ENGINE_ON_MY_BEHALF: 49;
+    ROOT: 47;
+  }
+  
+  export interface GrantablePermissionMap {
+    CAN_ADD_MY_SIGNATORY: 0;
+    CAN_REMOVE_MY_SIGNATORY: 1;
+    CAN_SET_MY_QUORUM: 2;
+    CAN_SET_MY_ACCOUNT_DETAIL: 3;
+    CAN_TRANSFER_MY_ASSETS: 4;
+    CAN_CALL_ENGINE_ON_MY_BEHALF: 5;
+  }
+    
 
 export class DetachRoleRequest {
     accountId!: string;
@@ -151,11 +244,11 @@ export class DetachRoleRequest {
 
 export class GrantablePermissionRequest {
     accountId!: string;
-    permission!: string;
+    permission!: GrantablePermissionMap[keyof GrantablePermissionMap];
    
     //constructor(){}
 
-    constructor(accountId: string, permission: string) {
+    constructor(accountId: string, permission: GrantablePermissionMap[keyof GrantablePermissionMap]) {
         this.accountId = accountId;
         this.permission = permission;
     }
@@ -185,11 +278,11 @@ export class RemoveSignatoryRequest {
 
 export class RevokePermissionRequest {
     accountId!: string;
-    permission!: string;
+    permission!: GrantablePermissionMap[keyof GrantablePermissionMap];
 
     //constructor(){}
 
-    constructor(accountId: string, permission: string) {
+    constructor(accountId: string, permission: GrantablePermissionMap[keyof GrantablePermissionMap]) {
         this.accountId = accountId;
         this.permission = permission;
     }
