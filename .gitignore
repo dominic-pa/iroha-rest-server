@@ -102,3 +102,6 @@ dist
 
 # TernJS port file
 .tern-port
+
+# For debugging in VS Code
+launch.json
