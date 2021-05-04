@@ -1,0 +1,43 @@
+{
+  "name": "iroha-rest-server",
+  "version": "1.0.0",
+  "description": "A REST server to interact with Hyperledger Iroha blockchain platform",
+  "main": "src/app.ts",
+  "scripts": {
+    "dev": "LOG_LEVEL=debug nodemon src/app.ts | ./node_modules/.bin/pino-pretty",
+    "build": "tsc"
+  },
+  "keywords": [],
+  "author": "Dominic Poku-Aidoo",
+  "license": "ISC",
+  "dependencies": {
+    "@improbable-eng/grpc-web-node-http-transport": "^0.13.0",
+    "@types/swagger-jsdoc": "^6.0.0",
+    "@types/swagger-ui-express": "^4.1.2",
+    "body-parser": "^1.19.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-pino-logger": "^5.0.0",
+    "express-swagger-generator": "^1.1.17",
+    "grpc": "^1.24.4",
+    "grpc-web-client": "^0.7.0",
+    "iroha-helpers-ts": "^0.9.19-ss",
+    "morgan": "^1.10.0",
+    "pino": "^6.10.0",
+    "pino-http": "^5.3.0",
+    "rxjs": "^6.6.3",
+    "swagger-jsdoc": "^7.0.0-rc.6",
+    "swagger-ui-express": "^4.1.6"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.9",
+    "@types/express-pino-logger": "^4.0.2",
+    "@types/morgan": "^1.9.2",
+    "@types/node": "^14.14.14",
+    "@types/pino": "^6.3.5",
+    "nodemon": "^2.0.6",
+    "pino-pretty": "^4.3.0",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.1.3"
+  }
+}
