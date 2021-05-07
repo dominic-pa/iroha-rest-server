@@ -25,7 +25,7 @@ class BatchTransactionController {
           irohaAccountKey: req.headers[IROHA_ACCOUNT_KEY_HEADER]
         };
         this.irohaBatchService.sendBatchTransactions(batchTxRequest, txCreatorAccount)
-            .then(finalBatchResp => {
+            .then((finalBatchResp:any) => {
                 if(finalBatchResp != 'REJECTED') {
                   res.status(200).send(finalBatchResp);
                 } else {
@@ -33,7 +33,7 @@ class BatchTransactionController {
                 }
                 
             })
-            .catch(err => {
+            .catch((err:any) => {
                 console.error(err);
                 res.status(500).send(err.message);
             });
