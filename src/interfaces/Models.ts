@@ -4,6 +4,14 @@ export type BatchInformation = {
     unit?: string;
   };
   
+
+  export namespace Signature {
+    export type AsObject = {
+      publicKey: string,
+      signature: string,
+    }
+  }
+  
   export type BatchRequest = {
     batchId?: string;
     facilityName?: string;
