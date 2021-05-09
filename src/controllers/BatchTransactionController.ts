@@ -1,9 +1,8 @@
-import { NextFunction, Request, Response, Router } from 'express';
+// TODO: To be implemented
 
-import IrohaBatchService from '../services/IrohaBatchService';
-import { TxBuilder, BatchBuilder } from 'iroha-helpers-ts/lib/chain'
-import { IROHA_ACCOUNT_ID_HEADER, IROHA_ACCOUNT_KEY_HEADER } from '../configs/IrohaConfig';
-
+import { Request, Response, Router, NextFunction } from "express";
+import { IROHA_ACCOUNT_ID_HEADER, IROHA_ACCOUNT_KEY_HEADER } from "../configs/IrohaConfig";
+import IrohaBatchService from "../services/IrohaBatchService";
 
 class BatchTransactionController {
   private _router = Router();
@@ -18,7 +17,7 @@ class BatchTransactionController {
   }
 
   private async _sendBatchTx() {
-    await this._router.post('/sendBatchTx', (req: Request, res: Response, next: NextFunction) => {
+    await this._router.post('/sendBatchTx', (req: Request, res: Response) => {
         let batchTxRequest:any = req.body.batchTxs;
         let txCreatorAccount:any = {
           irohaAccountId: req.headers[IROHA_ACCOUNT_ID_HEADER],
@@ -41,4 +40,5 @@ class BatchTransactionController {
   }
 
 }
+
 export = new BatchTransactionController().router;
