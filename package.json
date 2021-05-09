@@ -21,7 +21,7 @@
     "express-swagger-generator": "^1.1.17",
     "grpc": "^1.24.4",
     "grpc-web-client": "^0.7.0",
-    "iroha-helpers-ts": "0.9.25-ss",
+    "iroha-helpers-ts": "0.9.19-ss",
     "morgan": "^1.10.0",
     "pino": "^6.10.0",
     "pino-http": "^5.3.0",

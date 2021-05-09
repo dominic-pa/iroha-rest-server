@@ -1,79 +1,31 @@
-import { BatchBuilder, TxBuilder, Chain } from "iroha-helpers-ts/lib/chain";
+import { BatchBuilder, TxBuilder } from "iroha-helpers-ts/lib/chain";
 import { Transaction } from "iroha-helpers-ts/lib/proto/transaction_pb";
-import { AddPeerRequest, AddSignatoryRequest, AdjustAssetQuantityRequest, AppendRoleRequest, BatchAddPeerRequest, CompareAndSetAccountDetailRequest, CreateAccountRequest, CreateAssetRequest, CreateDomainRequest, CreateRoleRequest, DetachRoleRequest, GrantablePermissionRequest, RemovePeerRequest, RemoveSignatoryRequest, RevokePermissionRequest, SetAccountDetailRequest, SetAccountQuorumRequest, TransferAssetRequest } from "../interfaces/requests/CommandRequests";
+import { AddSignatoryRequest, AdjustAssetQuantityRequest, AppendRoleRequest, BatchAddPeerRequest, CompareAndSetAccountDetailRequest, CreateAccountRequest, CreateAssetRequest, CreateDomainRequest, CreateRoleRequest, DetachRoleRequest, GrantablePermissionRequest, RemovePeerRequest, RemoveSignatoryRequest, RevokePermissionRequest, SetAccountDetailRequest, SetAccountQuorumRequest, TransferAssetRequest } from "../interfaces/requests/CommandRequests";
 import * as Constants from "../utils/Constants";
 import {
     CommandService_v1Client as CommandService
   } from 'iroha-helpers-ts/lib/proto/endpoint_grpc_pb';
 import { IROHA_COMMAND_DEFAULT_QUORUM, IROHA_COMMAND_SERVICE_TIMEOUT, IROHA_PEER_ADDR } from "../configs/IrohaConfig";
 import * as grpc from 'grpc';
-import { Buffer as BF } from 'buffer'
-import cryptoHelper from "iroha-helpers-ts/lib/cryptoHelper";
-import { sha3_256 as sha3 } from 'js-sha3'
-import { Signature } from "iroha-helpers-ts/lib/proto/primitive_pb";
-import cloneDeep from 'lodash.clonedeep';
-
-
 
 class IrohaBatchService {
-
     private batchArrayList: Array<Transaction> = [];
-    
     private commandService = new CommandService(IROHA_PEER_ADDR,grpc.credentials.createInsecure(),{});
 
-    constructor(){}
-
     public sendBatchTransactions(batchTxs:any, txCreatorAccount:any) {
-        this.batchArrayList = [];
-        // new TxBuilder()
-        //     .createAccount({
-        //         accountName: 'user1',
-        //         domainId: 'atlas',
-        //         publicKey: '0000000000000000000000000000000000000000000000000000000000000000'
-        //     })
-        //     .addMeta(txCreatorAccount.accountId, 1)
-        //     .send(this.commandService)
-        //     .then(res => console.log(res))
-        //     .catch(err => console.error(err))
-
-
+        this.batchArrayList = new Array;
 
         batchTxs.forEach((tx: any) => {
             this.selectAndAddBatchTransaction(tx,txCreatorAccount);
         });
         
-        console.log(this.batchArrayList);
+        let batch = new BatchBuilder(this.batchArrayList).setBatchMeta(0);
 
-        let testBatch = new BatchBuilder(this.batchArrayList).setBatchMeta(0);
-        let numberOfTxs = this.batchArrayList.length;
-        let finalBatch = new Chain([]);
+        for (let i = 0; i < batch.txs.length; i++) {
+            batch = batch.sign([txCreatorAccount.irohaAccountKey],i);
+        }
 
-        // for (let i = 0; i < numberOfTxs; i++) {
-        //     finalBatch = testBatch.sign([txCreatorAccount.irohaAccountKey],i);
-        // }
-        return new BatchBuilder(this.batchArrayList)
-            .setBatchMeta(0)
-            .signBatch([txCreatorAccount.irohaAccountKey],this.batchArrayList)
-            .send(this.commandService, IROHA_COMMAND_SERVICE_TIMEOUT);
-
-        // let finalBatch = new BatchBuilder(this.batchArrayList).setBatchMeta(0);
-        // finalBatch = testBatch;
-
-        finalBatch
-        .sign([txCreatorAccount.irohaAccountKey],0)
-        .sign([txCreatorAccount.irohaAccountKey],1);
-        // finalBatch = new Chain(testBatch
-        //     .sign([txCreatorAccount.irohaAccountKey],0).txs);
-
-            
-
-        
-        return finalBatch.send(this.commandService, IROHA_COMMAND_SERVICE_TIMEOUT);
-
-        return new BatchBuilder(this.batchArrayList)
-            .setBatchMeta(0)
-            .sign([txCreatorAccount.irohaAccountKey],0)
-            .sign([txCreatorAccount.irohaAccountKey],1)
+        return batch
             .send(this.commandService, IROHA_COMMAND_SERVICE_TIMEOUT)
             .then(finalBatchResp => {
               console.log("finalBatch response",finalBatchResp);
@@ -83,28 +35,6 @@ class IrohaBatchService {
               console.error(err);
               return 'REJECTED';
             });
-    }
-
-    private signBatch (transaction:Transaction, privateKeyHex:string){
-        const privateKey = BF.from(privateKeyHex, 'hex')
-        const publicKey = cryptoHelper.derivePublicKey(privateKeyHex)
-      
-        const payloadHash = this.hash(transaction)
-      
-        const signatory = cryptoHelper.sign(payloadHash, publicKey, privateKey)
-      
-        const s = new Signature()
-        s.setPublicKey(publicKey.toString('hex'))
-        s.setSignature(signatory.toString('hex'))
-      
-        const signedTransactionWithSignature = cloneDeep(transaction)
-        signedTransactionWithSignature.addSignatures(s, signedTransactionWithSignature.getSignaturesList.length)
-      
-        return signedTransactionWithSignature
-      }
-
-    private hash (transaction:any) {
-        return BF.from(sha3.array(transaction.getPayload().serializeBinary()))
     }
 
     private selectAndAddBatchTransaction(batchTxReq:any, txCreatorAccount:any){
@@ -217,19 +147,16 @@ class IrohaBatchService {
         let transaction = new TxBuilder()
             .createAsset(batchTransactionRequest)
             .addMeta(irohaTxCreatorAccount.irohaAccountId, IROHA_COMMAND_DEFAULT_QUORUM)
-            //.sign([irohaTxCreatorAccount.irohaAccountKey])
             .tx;
-            //this.signBatch(transaction,irohaTxCreatorAccount.irohaAccountId)
-        return transaction;
+
+            return transaction;
     };
 
     private createDomainTx(batchTransactionRequest: CreateDomainRequest, irohaTxCreatorAccount: any): Transaction {
         let transaction = new TxBuilder()
             .createDomain(batchTransactionRequest)
             .addMeta(irohaTxCreatorAccount.irohaAccountId, IROHA_COMMAND_DEFAULT_QUORUM)
-            //.sign([irohaTxCreatorAccount.irohaAccountKey])
             .tx;
-            //this.signBatch(transaction,irohaTxCreatorAccount.irohaAccountId)
 
         return transaction;
     };
