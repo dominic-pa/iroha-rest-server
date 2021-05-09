@@ -21,7 +21,7 @@
     "express-swagger-generator": "^1.1.17",
     "grpc": "^1.24.4",
     "grpc-web-client": "^0.7.0",
-    "iroha-helpers-ts": "^0.9.19-ss",
+    "iroha-helpers-ts": "0.9.19-ss",
     "morgan": "^1.10.0",
     "pino": "^6.10.0",
     "pino-http": "^5.3.0",
@@ -32,6 +32,7 @@
   "devDependencies": {
     "@types/express": "^4.17.9",
     "@types/express-pino-logger": "^4.0.2",
+    "@types/lodash.clonedeep": "^4.5.6",
     "@types/morgan": "^1.9.2",
     "@types/node": "^14.14.14",
     "@types/pino": "^6.3.5",
