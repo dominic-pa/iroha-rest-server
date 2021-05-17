@@ -4,7 +4,14 @@ import {
   } from 'iroha-helpers-ts/lib/proto/endpoint_grpc_pb';
 import commandsInit from 'iroha-helpers-ts/lib/commands/index';
 import { setIrohaErrorResp, setIrohaSuccessResp } from '../utils/Utils';
-import { AdjustAssetQuantityRequest, AddPeerRequest, AddSignatoryRequest, AppendRoleRequest, CompareAndSetAccountDetailRequest, CreateAccountRequest, CreateAssetRequest, CreateDomainRequest, CreateRoleRequest, DetachRoleRequest, GrantablePermissionRequest, RemovePeerRequest, RemoveSignatoryRequest, RevokePermissionRequest, SetAccountDetailRequest, SetAccountQuorumRequest, TransferAssetRequest } from '../interfaces/requests/CommandRequests';
+import { AdjustAssetQuantityRequest, AddPeerRequest, 
+  AddSignatoryRequest, AppendRoleRequest, 
+  CompareAndSetAccountDetailRequest, CreateAccountRequest, 
+  CreateAssetRequest, CreateDomainRequest, CreateRoleRequest, 
+  DetachRoleRequest, GrantablePermissionRequest, 
+  RemovePeerRequest, RemoveSignatoryRequest, 
+  RevokePermissionRequest, SetAccountDetailRequest, 
+  SetAccountQuorumRequest, TransferAssetRequest } from '../interfaces/requests/CommandRequests';
 import { IROHA_ACCOUNT_ID_HEADER, IROHA_ACCOUNT_KEY_HEADER, IROHA_DEFAULT_PRIM_KEY, IROHA_COMMAND_SERVICE_TIMEOUT, IROHA_COMMAND_DEFAULT_QUORUM } from '../configs/IrohaConfig';
 import { IROHA_PEER_ADDR } from '../configs/IrohaConfig';
 
@@ -22,6 +29,21 @@ class IrohaCommandService {
         quorum: IROHA_COMMAND_DEFAULT_QUORUM,
         commandService: this.commandService,
         timeoutLimit: IROHA_COMMAND_SERVICE_TIMEOUT,
+    };
+
+    createDomain(createDomainRequest: CreateDomainRequest,commandOptions: any): Promise<any>{
+      this.COMMAND_OPTIONS.creatorAccountId = commandOptions[IROHA_ACCOUNT_ID_HEADER];
+      this.COMMAND_OPTIONS.privateKeys[0] = commandOptions[IROHA_ACCOUNT_KEY_HEADER];
+      return this.commands.createDomain(this.COMMAND_OPTIONS, {
+        domainId: createDomainRequest.domainId,
+        defaultRole: createDomainRequest.defaultRole
+      })
+        .then((resp: any) => {
+          return setIrohaSuccessResp(resp);      
+        })
+        .catch((err) => {
+          return setIrohaErrorResp(err);          
+        });
     };
 
     // COMMANDS
@@ -137,20 +159,7 @@ class IrohaCommandService {
         });
     };
 
-    createDomain(createDomainRequest: CreateDomainRequest,commandOptions: any): Promise<any>{
-      this.COMMAND_OPTIONS.creatorAccountId = commandOptions[IROHA_ACCOUNT_ID_HEADER];
-      this.COMMAND_OPTIONS.privateKeys[0] = commandOptions[IROHA_ACCOUNT_KEY_HEADER];
-      return this.commands.createDomain(this.COMMAND_OPTIONS, {
-        domainId: createDomainRequest.domainId,
-        defaultRole: createDomainRequest.defaultRole
-      })
-        .then((resp: any) => {
-          return setIrohaSuccessResp(resp);      
-        })
-        .catch((err) => {
-          return setIrohaErrorResp(err);          
-        });
-    };
+
 
     createRole(createRoleRequest: CreateRoleRequest,commandOptions: any): Promise<any>{
       this.COMMAND_OPTIONS.creatorAccountId = commandOptions[IROHA_ACCOUNT_ID_HEADER];

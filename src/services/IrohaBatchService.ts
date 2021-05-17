@@ -2,18 +2,23 @@ import { BatchBuilder, TxBuilder } from "iroha-helpers-ts/lib/chain";
 import { Transaction } from "iroha-helpers-ts/lib/proto/transaction_pb";
 import { AddSignatoryRequest, AdjustAssetQuantityRequest, AppendRoleRequest, BatchAddPeerRequest, CompareAndSetAccountDetailRequest, CreateAccountRequest, CreateAssetRequest, CreateDomainRequest, CreateRoleRequest, DetachRoleRequest, GrantablePermissionRequest, RemovePeerRequest, RemoveSignatoryRequest, RevokePermissionRequest, SetAccountDetailRequest, SetAccountQuorumRequest, TransferAssetRequest } from "../interfaces/requests/CommandRequests";
 import * as Constants from "../utils/Constants";
-import {
-    CommandService_v1Client as CommandService
-  } from 'iroha-helpers-ts/lib/proto/endpoint_grpc_pb';
+import { CommandService_v1Client as CommandService } from 'iroha-helpers-ts/lib/proto/endpoint_grpc_pb';
+import { QueryService_v1Client as QueryService } from 'iroha-helpers-ts/lib/proto/endpoint_grpc_pb';
 import { IROHA_COMMAND_DEFAULT_QUORUM, IROHA_COMMAND_SERVICE_TIMEOUT, IROHA_PEER_ADDR } from "../configs/IrohaConfig";
 import * as grpc from 'grpc';
+import {exec} from 'child_process';
 
 class IrohaBatchService {
     private batchArrayList: Array<Transaction> = [];
     private commandService = new CommandService(IROHA_PEER_ADDR,grpc.credentials.createInsecure(),{});
+    private queryService = new QueryService(IROHA_PEER_ADDR,grpc.credentials.createInsecure(),{});
 
-    public sendBatchTransactions(batchTxs:any, txCreatorAccount:any) {
+    public sendBatchTransactions(batchTxs:any, txCreatorAccount:any, batchType: any) {
         this.batchArrayList = new Array;
+        let irohaService;
+
+        if(batchType == 'COMMAND') irohaService = this.commandService;
+        if(batchType == 'QUERY') irohaService = this.queryService;
 
         batchTxs.forEach((tx: any) => {
             this.selectAndAddBatchTransaction(tx,txCreatorAccount);
@@ -26,7 +31,7 @@ class IrohaBatchService {
         }
 
         return batch
-            .send(this.commandService, IROHA_COMMAND_SERVICE_TIMEOUT)
+            .send(irohaService, IROHA_COMMAND_SERVICE_TIMEOUT)
             .then(finalBatchResp => {
               console.log("finalBatch response",finalBatchResp);
               return finalBatchResp;
@@ -38,7 +43,7 @@ class IrohaBatchService {
     }
 
     private selectAndAddBatchTransaction(batchTxReq:any, txCreatorAccount:any){
-        switch(batchTxReq.command) {
+        switch(batchTxReq.action) {
             case Constants.CMD_ADD_ASSET_QUANTITY:
                 this.batchArrayList.push(this.addAssetQuantityTx(batchTxReq.tx,txCreatorAccount));
                 break;
@@ -252,6 +257,15 @@ class IrohaBatchService {
     };
 
     private transferAssetTx(batchTransactionRequest: TransferAssetRequest, irohaTxCreatorAccount: any): Transaction {
+        let transaction = new TxBuilder()
+            .transferAsset(batchTransactionRequest)
+            .addMeta(irohaTxCreatorAccount.irohaAccountId, IROHA_COMMAND_DEFAULT_QUORUM)
+            .tx;
+
+        return transaction;
+    };
+
+    private getAccountTx(batchTransactionRequest: TransferAssetRequest, irohaTxCreatorAccount: any): Transaction {
         let transaction = new TxBuilder()
             .transferAsset(batchTransactionRequest)
             .addMeta(irohaTxCreatorAccount.irohaAccountId, IROHA_COMMAND_DEFAULT_QUORUM)
