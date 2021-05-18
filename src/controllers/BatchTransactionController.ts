@@ -19,11 +19,12 @@ class BatchTransactionController {
   private async _sendBatchTx() {
     await this._router.post('/sendBatchTx', (req: Request, res: Response) => {
         let batchTxRequest:any = req.body.batchTxs;
+        let batchType = req.body.batchType;
         let txCreatorAccount:any = {
           irohaAccountId: req.headers[IROHA_ACCOUNT_ID_HEADER],
           irohaAccountKey: req.headers[IROHA_ACCOUNT_KEY_HEADER]
         };
-        this.irohaBatchService.sendBatchTransactions(batchTxRequest, txCreatorAccount)
+        this.irohaBatchService.sendBatchTransactions(batchTxRequest, txCreatorAccount, batchType)
             .then((finalBatchResp:any) => {
                 if(finalBatchResp != 'REJECTED') {
                   res.status(200).send(finalBatchResp);

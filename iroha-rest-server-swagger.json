@@ -105,10 +105,7 @@
                     "200": {
                         "description": "successful operation",
                         "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/IrohaSuccessResponse"
-                            }
+                          "$ref": "#/definitions/IrohaSuccessResponse"
                         }
                     },
                     "500": {
@@ -141,10 +138,7 @@
                     "200": {
                         "description": "successful operation",
                         "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/IrohaSuccessResponse"
-                            }
+                          "$ref": "#/definitions/IrohaSuccessResponse"
                         }
                     },
                     "500": {
@@ -565,10 +559,7 @@
                     "200": {
                         "description": "successful operation",
                         "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/getAssetInfoResponse"
-                            }
+                            "$ref": "#/definitions/IrohaSuccessResponse"
                         }
                     },
                     "500": {

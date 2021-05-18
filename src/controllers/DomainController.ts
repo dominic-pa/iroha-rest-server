@@ -1,7 +1,6 @@
 import { NextFunction, Request, Response, Router } from 'express';
 
 import { CreateDomainRequest } from '../interfaces/requests/CommandRequests';
-import cryptoHelper from 'iroha-helpers-ts/lib/cryptoHelper';
 import IrohaCommandService = require('../services/IrohaCommandService');
 
 class DomainController {
@@ -33,8 +32,6 @@ class DomainController {
       });
     });
   }
-
-  
 
 }
 export = new DomainController().router;
